@@ -39,7 +39,7 @@ class OverlayView(
     }
 
     private fun initPaints() {
-        textBackgroundPaint.color = Color.BLACK
+        textBackgroundPaint.color = Color.RED
         textBackgroundPaint.style = Paint.Style.FILL
         textBackgroundPaint.textSize = 50f
 
@@ -47,7 +47,7 @@ class OverlayView(
         textPaint.style = Paint.Style.FILL
         textPaint.textSize = 50f
 
-        boxPaint.color = Color.GREEN
+        boxPaint.color = Color.RED
         boxPaint.strokeWidth = 8F
         boxPaint.style = Paint.Style.STROKE
     }
@@ -74,16 +74,23 @@ class OverlayView(
             textBackgroundPaint.getTextBounds(drawableText, 0, drawableText.length, bounds)
             val textWidth = bounds.width()
             val textHeight = bounds.height()
+
+            val strokeWidth = boxPaint.strokeWidth / 2
+            // Calculate the new left position (outside the bounding box), considering stroke width
+            val newLeft = left - strokeWidth
+            // Calculate the new top position (above the bounding box)
+            val newTop = top - textHeight - BOUNDING_RECT_TEXT_PADDING - strokeWidth
+
             canvas.drawRect(
-                left,
-                top,
-                left + textWidth + BOUNDING_RECT_TEXT_PADDING,
-                top + textHeight + BOUNDING_RECT_TEXT_PADDING,
+                newLeft,
+                newTop,
+                newLeft + textWidth + BOUNDING_RECT_TEXT_PADDING,
+                newTop + textHeight + BOUNDING_RECT_TEXT_PADDING,
                 textBackgroundPaint
             )
 
-            // Draw text for detected object
-            canvas.drawText(drawableText, left, top + bounds.height(), textPaint)
+            // Draw text for detected object above the bounding box
+            canvas.drawText(drawableText, left, newTop + textHeight, textPaint)
         }
     }
 
