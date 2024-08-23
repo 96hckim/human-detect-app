@@ -18,8 +18,7 @@ enum class ModelType(val displayName: String) {
     MOBILENET_V1("mobilenetv1"),
     EFFICIENTDET_V0("efficientdet-lite0"),
     EFFICIENTDET_V1("efficientdet-lite1"),
-    EFFICIENTDET_V2("efficientdet-lite2"),
-    NP_CONVERTED_PEOPLE_DETECTION("NP-converted-people_detection");
+    EFFICIENTDET_V2("efficientdet-lite2");
 
     fun getFileName(): String = "$displayName.tflite"
 }
